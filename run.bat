@@ -1,2 +1,7 @@
 @echo off
-py -m src.repl
+cd /d "%~dp0"
+if exist ".venv\Scripts\python.exe" (
+    ".venv\Scripts\python.exe" -m src.server %*
+) else (
+    py -m src.server %*
+)

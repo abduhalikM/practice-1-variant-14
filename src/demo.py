@@ -1,9 +1,12 @@
 """Демонстрация функциональности первого этапа."""
 
+from src.client import RpcClient
 from src.model import DataModel, Record
 
 
-def create_records(model: DataModel) -> tuple[Record, Record, Record]:
+def create_records(
+    model: DataModel | RpcClient,
+) -> tuple[Record, Record, Record]:
     """Создать связанные записи трёх сущностей."""
     participant = model.create_participant(
         {
@@ -35,7 +38,7 @@ def create_records(model: DataModel) -> tuple[Record, Record, Record]:
 
 
 def show_operations(
-    model: DataModel, records: tuple[Record, Record, Record]
+    model: DataModel | RpcClient, records: tuple[Record, Record, Record]
 ) -> None:
     """Показать операции чтения и соединённую выборку."""
     participant, command, reply = records
