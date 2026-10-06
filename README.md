@@ -7,7 +7,13 @@ py -m src.demo - показывает все операции первого э�
 
 py -m src.repl - открывает интерактивную модель.
 
+data = {"ip": "127.0.0.1", "locale": "ru-RU", "user_agent": "Firefox"} - задаёт данные участника после появления >>>.
+
+participant = model.create_participant(data) - создаёт участника в памяти.
+
 model.get_participants() - показывает участников в консоли модели.
+
+model.get_participant(participant["id"]) - получает созданного участника по id.
 
 model.get_recent_results() - показывает выборку по формуле.
 
@@ -26,7 +32,13 @@ py -m src.rpc_demo - показывает все 10 удалённых мето�
 
 py -m src.client - открывает интерактивный клиент во втором терминале.
 
+data = {"ip": "127.0.0.1", "locale": "ru-RU", "user_agent": "Firefox"} - задаёт данные участника после появления >>>.
+
+participant = client.create_participant(data) - создаёт участника на сервере через TCP.
+
 client.get_participants() - показывает участников в консоли клиента.
+
+client.get_participant(participant["id"]) - получает созданного участника с сервера по id.
 
 client.get_recent_results() - получает выборку по формуле через TCP.
 
