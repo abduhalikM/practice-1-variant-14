@@ -150,11 +150,13 @@ class DataModel:
     def get_recent_results(
         self, now: int | None = None
     ) -> list[Record]:
-        """Получить соединённые данные за последние восемь минут."""
+        """Получить уникальные соединённые строки за восемь минут."""
         current_time = int(time.time()) if now is None else now
         threshold = current_time - self.recent_interval_seconds
         result: list[Record] = []
         for command in self.commands.values():
             if command["created"] > threshold:
-                result.extend(self._rows_for_command(command))
+                for row in self._rows_for_command(command):
+                    if row not in result:
+                        result.append(row)
         return result

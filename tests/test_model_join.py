@@ -52,3 +52,20 @@ class ModelJoinTests(unittest.TestCase):
             "ip": "127.0.0.1", "locale": "ru-RU", "user_agent": "Test",
         })
         self.assertEqual(model.get_recent_results(), [])
+
+    def test_projection_removes_duplicates(self) -> None:
+        """Удалить повторы после проекции, в том числе разных команд."""
+        model = DataModel()
+        participant, command, reply = create_records(model)
+        model.create_reply(reply)
+        second_command = model.create_command(command)
+        second_reply = dict(reply, command=second_command["id"])
+        model.create_reply(second_reply)
+        self.assertEqual(
+            model.get_recent_results(now=command["created"]),
+            [{
+                "description": command["description"],
+                "ip": participant["ip"],
+                "response": reply["response"],
+            }],
+        )

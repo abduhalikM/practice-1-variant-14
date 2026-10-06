@@ -182,6 +182,22 @@ class RpcTests(unittest.TestCase):
             self.assertEqual(s.recv(1), b"")
         self.assertEqual(self.client.get_participants(), [])
 
+    def test_projection_removes_duplicates(self) -> None:
+        """Получить уникальную проекцию через TCP-клиент."""
+        self.set_up()
+        participant, command, reply = create_records(self.client)
+        self.client.create_reply(reply)
+        second_command = self.client.create_command(command)
+        self.client.create_reply(dict(reply, command=second_command["id"]))
+        self.assertEqual(
+            self.client.get_recent_results(now=command["created"]),
+            [{
+                "description": command["description"],
+                "ip": participant["ip"],
+                "response": reply["response"],
+            }],
+        )
+
     def test_client_rejects_invalid_response(self) -> None:
         """Отклонить чужой код операции и неверную структуру ответа."""
         self.set_up()
