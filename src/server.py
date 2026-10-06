@@ -106,7 +106,7 @@ def main() -> None:
     try:
         with RpcServer(address) as server:
             host, port = server.server_address
-            print(f"RPC-сервер: {host}:{port}")
+            print("RPC-сервер: {}:{}".format(host, port))
             print("Ответы записываются в journal.log. Выход: Ctrl+C.")
             server.serve_forever()
     except KeyboardInterrupt:

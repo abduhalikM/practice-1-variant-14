@@ -93,10 +93,10 @@ def main() -> None:
     host, port = parse_address("Интерактивный клиент RPC")
     client = RpcClient(host, port)
     message = (
-        f"RPC-клиент: {host}:{port}. Сначала запустите сервер.\n"
+        "RPC-клиент: {}:{}. Сначала запустите сервер.\n"
         "Пример: client.get_participants()\n"
         "Для выхода выполните exit()."
-    )
+    ).format(host, port)
     code.interact(banner=message, local={"client": client})
 
 
